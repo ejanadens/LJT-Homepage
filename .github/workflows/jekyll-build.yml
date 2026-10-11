@@ -1,26 +1,32 @@
-name: Jekyll build
+name: Build and deploy homepage
 
 on:
-  # Run after bad-pr check
-  workflow_run:
-    workflows: ["Cleanup bad PR"]
-    branches: [main]
-    types:
-      - completed
-      
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
 permissions:
   contents: read
 
 concurrency:
-  group: jekyll-build-${{ github.ref }}
+  group: homepage-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      pages_ready: ${{ steps.pages.outputs.ready }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -29,6 +35,48 @@ jobs:
           bundler-cache: true
 
       - name: Build site
-        run: bundle exec jekyll build --strict_front_matter
+        run: bundle exec jekyll build --strict_front_matter --trace
         env:
           JEKYLL_ENV: production
+
+      - name: Validate content, page scope, and local links
+        run: python3 scripts/validate_homepage.py
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Check Pages configuration
+        id: pages
+        if: github.event_name != 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              const { data } = await github.rest.repos.getPages(context.repo);
+              const ready = data.build_type === 'workflow';
+              core.setOutput('ready', String(ready));
+              if (!ready) {
+                core.warning('The site artifact is ready. Set Settings > Pages > Source to GitHub Actions to use this deployment job.');
+              }
+            } catch (error) {
+              if (error.status !== 404 && error.status !== 403) throw error;
+              core.setOutput('ready', 'false');
+              core.warning('Pages is not enabled or its settings are inaccessible. The built site is available as an artifact; deployment has not occurred.');
+            }
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && needs.build.outputs.pages_ready == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

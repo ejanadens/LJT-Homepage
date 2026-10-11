@@ -1,0 +1,89 @@
+# Only years, venues, authors, roles, and code information recorded in memory.
+# No publication dates, paper URLs, or repository URLs have been inferred.
+- title: "SynLogic: Synthesizing Verifiable Reasoning Data at Scale for Learning Logical Reasoning and Beyond"
+  year: 2025
+  venue: "arXiv"
+  authorship: "First author"
+  authors:
+    - Junteng Liu
+    - Yuanxiang Fan
+    - Zhuo Jiang
+    - Han Ding
+    - Yongyi Hu
+    - Chi Zhang
+    - Yiqi Shi
+    - Shitong Weng
+    - Aili Chen
+    - Shiqi Chen
+    - Yunan Huang
+    - Mozhi Zhang
+    - Pengyu Zhao
+    - Junjie Yan
+    - Junxian He
+  code_note: "GitHub code repository available."
+
+- title: "On the Perception Bottleneck of VLMs for Chart Understanding"
+  year: 2025
+  venue: "arXiv"
+  authorship: "First author"
+  authors:
+    - Junteng Liu
+    - Weihao Zeng
+    - Xiwen Zhang
+    - Yijun Wang
+    - Zifei Shan
+    - Junxian He
+  code_note: "GitHub code repository: Vision4Chart."
+
+- title: "On the Universal Truthfulness Hyperplane Inside LLMs"
+  year: 2024
+  venue: "EMNLP"
+  authorship: "First author"
+  authors:
+    - Junteng Liu
+    - Shiqi Chen
+    - Yu Cheng
+    - Junxian He
+  code_note: "GitHub code repository: Universal_Truthfulness_Hyperplane."
+
+- title: "In-Context Sharpness as Alerts: An Inner Representation Perspective for Hallucination Mitigation"
+  year: 2024
+  venue: "ICML"
+  authorship: "Co-author"
+  authors:
+    - Shiqi Chen
+    - Miao Xiong
+    - Junteng Liu
+    - Zhengxuan Wu
+    - Teng Xiao
+    - Siyang Gao
+    - Junxian He
+
+- title: "C-Eval: A Multi-Level Multi-Discipline Chinese Evaluation Suite for Foundation Models"
+  year: 2023
+  venue: "NeurIPS"
+  authorship: "Co-author"
+  authors:
+    - Yuzhen Huang
+    - Yuzhuo Bai
+    - Zhihao Zhu
+    - Junlei Zhang
+    - Jinghan Zhang
+    - Tangjun Su
+    - Junteng Liu
+    - Chuancheng Lv
+    - Yikai Zhang
+    - Jiayi Lei
+    - Yao Fu
+    - Maosong Sun
+    - Junxian He
+
+- title: "Composing Parameter-Efficient Modules with Arithmetic Operations"
+  year: 2023
+  venue: "NeurIPS"
+  authorship: "Co-author"
+  authors:
+    - Jinghan Zhang
+    - Shiqi Chen
+    - Junteng Liu
+    - Junxian He
